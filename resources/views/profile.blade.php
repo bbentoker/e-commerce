@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <h1>{{$user->name}}</h1>
+    <h1><b>User: </b>{{$user->name}}</h1>
     <div class="row">
         <h3>Items bought in the past</h3>
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>Product</th>
