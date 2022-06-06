@@ -24,3 +24,5 @@ Route::resource('home',App\Http\Controllers\HomeController::class);
 Route::get('/buy/{sellerId}/{productId}',[App\Http\Controllers\BuyController::class,'buy'])->name('buy');
 Route::get('/profile',[App\Http\Controllers\BuyController::class,'profile'])->name('profile');
 Route::post('/buy/purchase',[App\Http\Controllers\BuyController::class,'purchase'])->name('purchase');
+
+Route::get('filter/category/{id}',[App\Http\Controllers\BuyController::class,'catFilter'])->name('catFilter');

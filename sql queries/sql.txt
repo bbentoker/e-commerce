@@ -1,0 +1,19 @@
+Getting a sellers products
+
+select `products`.*, `product_seller`.`seller_id` as `pivot_seller_id`, `product_seller`.`product_id` as `pivot_product_id`, `product_seller`.`quantity` as `pivot_quantity`, `product_seller`.`price` as `pivot_price` from `products` inner join `product_seller` on `products`.`id` = `product_seller`.`product_id` where `product_seller`.`seller_id` = "1"
+----------------------
+Creating a product and attaching it to a seller
+
+insert into `products` (`name`, `description`) values (some Product, some Description, ?, ?)
+insert into `product_seller` (`product_id`, `seller_id`) values (13, 1)
+----------------------
+Finding a product and get all the sellers that sell that product
+
+select `sellers`.*, `product_seller`.`product_id` as `pivot_product_id`, `product_seller`.`seller_id` as `pivot_seller_id` from `sellers` inner join `product_seller` on `sellers`.`id` = `product_seller`.`seller_id` where `product_seller`.`product_id` = (select id from `products` where (name = 'Toy'))
+----------------------
+Finding a category by name and getting al its products
+select * from `products` where `products`.`category_id` = (select id from `categories` where (name = 'Dad Stuff') limit 1) and `products`.`category_id` is not null
+----------------------
+Finding a user by id and getting what they bought
+
+select * from `boughts` where `boughts`.`user_id` = (select id from `users` where `users`.`id` = 1 limit 1) and `boughts`.`user_id` is not null

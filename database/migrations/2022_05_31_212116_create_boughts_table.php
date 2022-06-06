@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('seller_id');
             $table->integer('price')->default(0);
             $table->integer('quantity')->default(0);
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }

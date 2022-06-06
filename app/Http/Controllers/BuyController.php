@@ -9,14 +9,10 @@ use App\Models\Seller;
 
 class BuyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     public function buy($sellerId,$productId)
@@ -32,9 +28,11 @@ class BuyController extends Controller
         $data = $request->validate([
             'seller_id' => 'required',
             'product_id' => 'required',
+            'address' => 'required',
             'quantity' => 'required'
         ]);
-
+        
+        
         $user = Auth::user();
         $seller = \App\Models\Seller::find($data['seller_id']);
         $product = $seller->products->find($data['product_id']);
@@ -42,7 +40,7 @@ class BuyController extends Controller
         //not allowing user to buy more than seller has
         if($data['quantity'] > $product->pivot->quantity )
         {
-            return redirect()->route('buy',[$data['id'],$product->id])->with('error','Not enough quantity');
+            return redirect()->route('buy',[$seller->id,$product->id])->with('error','Not enough quantity');
         }
 
         $user->bought()->create([
@@ -50,6 +48,7 @@ class BuyController extends Controller
             'seller_id' => $seller->id,
             'quantity' => $data['quantity'],
             'price' => $product->pivot->price,
+            'address' => $data['address']
         ]);
         
 
@@ -70,59 +69,11 @@ class BuyController extends Controller
         return view('profile',compact('user','products','sellers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function catFilter($id)
     {
+        $categories = \App\Models\Category::all();
+        $category = \App\Models\Category::find($id);
         
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('homeFiltered',compact('category','categories'));
     }
 }

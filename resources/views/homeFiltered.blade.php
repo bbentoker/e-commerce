@@ -6,9 +6,9 @@
         <div class="col-1">
             <div class="d-flex flex-column">
                 <h3>Categories</h3>
-                @foreach($categories as $category)
+                @foreach($categories as $c)
                     <div class="row m-2">
-                        <a href="{{route('catFilter',$category)}}" style="text-decoration:none;color:black;"><b style="white-space: nowrap;">- {{$category->name}}</b></a>
+                        <a href="{{route('catFilter',$c)}}" style="text-decoration:none;color:black;"><b style="white-space: nowrap;">- {{$c->name}}</b></a>
                     </div>
                 @endforeach    
             </div>
@@ -18,8 +18,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <h1>Home Page</h1>
-
-                    @foreach($products as $product)
+                    @foreach($category->products as $product)
                     <div class="card mt-1 mb-3">
                         <div class="card-body d-flex">
                             <div class="col-8">

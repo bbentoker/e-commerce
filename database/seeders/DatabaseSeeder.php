@@ -31,10 +31,15 @@ class DatabaseSeeder extends Seeder
         $mike = Seller::create(['name' => 'Mike']);
         $fring = Seller::create(['name' => 'Fring']);
         
-        Product::create(['name' => 'Toy','description' => 'Rubber duck for kids']);
-        Product::create(['name' => 'Tool','description' => 'Tools for dads']);
-        Product::create(['name' => 'Plate','description' => 'Nice plates for nice tables']);
-        Product::create(['name' => 'Bag','description' => 'A fashionable bag for your taste']);
+        Category::create(['name' => 'Kids']);
+        Category::create(['name' => 'Dad Stuff']);
+        Category::create(['name' => 'Kitchen']);
+        Category::create(['name' => 'Accessories']);
+
+        Product::create(['name' => 'Toy','category_id'=>1,'description' => 'Rubber duck for kids','brand' => 'Disney']);
+        Product::create(['name' => 'Tool','category_id'=>2,'description' => 'Tools for dads','brand' => 'Wilson\'s Tools']);
+        Product::create(['name' => 'Plate','category_id'=>3,'description' => 'Nice plates for nice tables','brand' => 'HomeStuff']);
+        Product::create(['name' => 'Bag','category_id'=>4,'description' => 'A fashionable bag for your taste','brand' => 'Gucci']);
 
         $john->products()->attach([1 =>['price' => 10,'quantity' => 5]]);
         $john->products()->attach([3 =>['price' => 7,'quantity' => 4]]);
